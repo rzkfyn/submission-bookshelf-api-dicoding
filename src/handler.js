@@ -72,7 +72,28 @@ const getAllBooksHandler = () => {
   };
 };
 
+const getBookByIdHandler = (request, h) => {
+  const { bookId } = request.params;
+  const index = books.findIndex((book) => book.id === bookId);
+
+  if (index !== -1) {
+    const book = books[index];
+    return h.response({
+      status: 'success',
+      data: {
+        book,
+      },
+    });
+  }
+
+  return h.response({
+    status: 'fail',
+    message: 'Buku tidak ditemukan',
+  }).code(404);
+};
+
 export {
   uploadNewBookHandler,
   getAllBooksHandler,
+  getBookByIdHandler,
 };

@@ -63,7 +63,6 @@ const getAllBooksHandler = () => {
     name: book.name,
     publisher: book.publisher,
   }));
-
   return {
     status: 'success',
     data: {
@@ -141,9 +140,29 @@ const updateBookByIdHandler = (request, h) => {
   });
 };
 
+const deleteBookByIdHandler = (request, h) => {
+  const { bookId } = request.params;
+  const index = books.findIndex((book) => book.id === bookId);
+
+  if (index === -1) {
+    return h.response({
+      status: 'fail',
+      message: 'Buku gagal dihapus. Id tidak ditemukan',
+    }).code(404);
+  }
+
+  books.splice(index, 1);
+
+  return h.response({
+    status: 'success',
+    message: 'Buku berhasil dihapus',
+  });
+};
+
 export {
   uploadNewBookHandler,
   getAllBooksHandler,
   getBookByIdHandler,
   updateBookByIdHandler,
+  deleteBookByIdHandler,
 };

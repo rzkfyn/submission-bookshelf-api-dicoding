@@ -57,6 +57,22 @@ const uploadNewBookHandler = (request, h) => {
   }).code(500);
 };
 
+const getAllBooksHandler = () => {
+  const data = books.map((book) => ({
+    id: book.id,
+    name: book.name,
+    publisher: book.publisher,
+  }));
+
+  return {
+    status: 'success',
+    data: {
+      books: data,
+    },
+  };
+};
+
 export {
   uploadNewBookHandler,
+  getAllBooksHandler,
 };
